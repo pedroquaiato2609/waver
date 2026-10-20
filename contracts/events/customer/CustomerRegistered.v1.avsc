@@ -1,0 +1,13 @@
+{
+  "type": "record",
+  "name": "CustomerRegistered",
+  "namespace": "br.com.waver.events.customer.v1",
+  "doc": "A reseller registered a customer in its portfolio (RFC-0017 §3). IDs and statuses only; contact data is fetched by API (STD-009). Topic waver.customer.customer.v1, key customerId.",
+  "fields": [
+    { "name": "customerId", "type": { "type": "string", "logicalType": "uuid" } },
+    { "name": "customerOrgId", "type": { "type": "string", "logicalType": "uuid" } },
+    { "name": "resellerOrgId", "type": { "type": "string", "logicalType": "uuid" } },
+    { "name": "lifecycleStage", "type": { "type": "enum", "name": "CustomerLifecycleStage", "symbols": ["PROSPECT", "CONTRACTING", "PROVISIONING", "ACTIVE", "TERMINATED", "UNKNOWN"], "default": "UNKNOWN" } },
+    { "name": "registeredAt", "type": { "type": "long", "logicalType": "timestamp-millis" } }
+  ]
+}

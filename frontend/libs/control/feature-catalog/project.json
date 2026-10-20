@@ -1,0 +1,16 @@
+{
+  "name": "control-feature-catalog",
+  "$schema": "../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/control/feature-catalog/src",
+  "prefix": "wv",
+  "projectType": "library",
+  "tags": [
+    "scope:control",
+    "type:feature"
+  ],
+  "targets": {
+    "lint": {
+      "executor": "@nx/eslint:lint"
+    }
+  }
+}

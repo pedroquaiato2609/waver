@@ -1,0 +1,78 @@
+/* WAVER login theme (ADR-0021): brand tokens v1.2 applied on top of Keycloak's keycloak.v2 (PatternFly 5) theme. */
+:root {
+  --wv-forest-950: #0A2A20;
+  --wv-forest-900: #0F3D2E;
+  --wv-forest-800: #154A39;
+  --wv-mineral-600: #2E7D6B;
+  --wv-mineral-700: #245F51;
+  --wv-sage-300: #A7C4B0;
+  --wv-off-white: #F7F6F2;
+  --wv-graphite: #2D2D2D;
+  --wv-lime: #C7E36B;
+
+  --pf-v5-global--primary-color--100: var(--wv-mineral-600);
+  --pf-v5-global--primary-color--200: var(--wv-mineral-700);
+  --pf-v5-global--link--Color: var(--wv-mineral-700);
+  --pf-v5-global--link--Color--hover: var(--wv-forest-900);
+  --pf-v5-global--FontFamily--text: "Inter", "Helvetica Neue", Arial, sans-serif;
+  --pf-v5-global--FontFamily--heading: "Inter", "Helvetica Neue", Arial, sans-serif;
+  --pf-v5-global--BorderRadius--sm: 6px;
+}
+
+body, .pf-v5-c-login {
+  background: var(--wv-forest-950) !important;
+}
+
+/* Forest field with the faceted symbol drawn large and quiet behind the card. */
+.pf-v5-c-login::before {
+  content: "";
+  position: fixed;
+  inset: auto -8vw -6vh auto;
+  width: 64vw;
+  height: 64vh;
+  background: url("../img/waver-lockup.svg") no-repeat right bottom / contain;
+  opacity: 0.06;
+  pointer-events: none;
+}
+
+#kc-header-wrapper, .pf-v5-c-login__header {
+  color: transparent !important;
+  font-size: 0 !important;
+  background: url("../img/waver-lockup.svg") no-repeat center / contain;
+  height: 64px;
+  margin: 0 auto 24px;
+  max-width: 300px;
+}
+
+.pf-v5-c-login__main {
+  background: var(--wv-off-white) !important;
+  border-radius: 10px;
+  box-shadow: 0 12px 32px rgba(10, 42, 32, 0.4);
+  color: var(--wv-graphite);
+}
+
+.pf-v5-c-login__main-header .pf-v5-c-title, #kc-page-title {
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  color: var(--wv-forest-900);
+}
+
+.pf-v5-c-button.pf-m-primary {
+  background-color: var(--wv-mineral-600);
+  border-radius: 6px;
+  font-weight: 600;
+}
+.pf-v5-c-button.pf-m-primary:hover,
+.pf-v5-c-button.pf-m-primary:focus {
+  background-color: var(--wv-mineral-700);
+}
+
+.pf-v5-c-form-control {
+  --pf-v5-c-form-control--after--BorderBottomColor: #74877C;
+  --pf-v5-c-form-control--focus--after--BorderBottomColor: var(--wv-mineral-600);
+}
+
+:focus-visible {
+  outline: 2px solid var(--wv-lime);
+  outline-offset: 2px;
+}

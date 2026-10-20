@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Platform-wide versions (ADR-0007). Services must not override these without an approved exception (STD-013). -->
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>br.com.waver.platform</groupId>
+    <artifactId>waver-platform-bom</artifactId>
+    <version>0.1.0-SNAPSHOT</version>
+    <packaging>pom</packaging>
+
+    <properties>
+        <spring-boot.version>4.0.8</spring-boot.version>
+        <spring-cloud.version>2025.1.3</spring-cloud.version>
+        <testcontainers.version>2.0.5</testcontainers.version>
+        <avro.version>1.12.2</avro.version>
+        <apicurio-serde.version>3.3.3</apicurio-serde.version>
+        <archunit.version>1.5.1</archunit.version>
+        <mapstruct.version>1.6.3</mapstruct.version>
+        <keycloak-admin-client.version>26.0.12</keycloak-admin-client.version>
+        <temporal.version>1.40.0</temporal.version>
+        <waver.version>0.1.0-SNAPSHOT</waver.version>
+    </properties>
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-dependencies</artifactId>
+                <version>${spring-boot.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework.cloud</groupId>
+                <artifactId>spring-cloud-dependencies</artifactId>
+                <version>${spring-cloud.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.testcontainers</groupId>
+                <artifactId>testcontainers-bom</artifactId>
+                <version>${testcontainers.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+
+            <dependency>
+                <groupId>org.apache.avro</groupId>
+                <artifactId>avro</artifactId>
+                <version>${avro.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.apicurio</groupId>
+                <artifactId>apicurio-registry-avro-serde-kafka</artifactId>
+                <version>${apicurio-serde.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.tngtech.archunit</groupId>
+                <artifactId>archunit-junit5</artifactId>
+                <version>${archunit.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.mapstruct</groupId>
+                <artifactId>mapstruct</artifactId>
+                <version>${mapstruct.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.keycloak</groupId>
+                <artifactId>keycloak-admin-client</artifactId>
+                <version>${keycloak-admin-client.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>io.temporal</groupId>
+                <artifactId>temporal-sdk</artifactId>
+                <version>${temporal.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.temporal</groupId>
+                <artifactId>temporal-testing</artifactId>
+                <version>${temporal.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>br.com.waver.contracts</groupId>
+                <artifactId>waver-event-schemas</artifactId>
+                <version>${waver.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>br.com.waver.platform</groupId>
+                <artifactId>waver-domain-kernel</artifactId>
+                <version>${waver.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>br.com.waver.platform</groupId>
+                <artifactId>waver-platform-starter</artifactId>
+                <version>${waver.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>br.com.waver.platform</groupId>
+                <artifactId>waver-platform-test</artifactId>
+                <version>${waver.version}</version>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+</project>

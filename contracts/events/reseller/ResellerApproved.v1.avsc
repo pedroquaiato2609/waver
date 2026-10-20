@@ -1,0 +1,12 @@
+{
+  "type": "record",
+  "name": "ResellerApproved",
+  "namespace": "br.com.waver.events.reseller.v1",
+  "doc": "A reseller was approved (UNDER_REVIEW -> APPROVED, RFC-0017 §2). Its organization is created right after, so resellerOrgId is usually null here. Topic waver.reseller.reseller.v1, key resellerId.",
+  "fields": [
+    { "name": "resellerId", "type": { "type": "string", "logicalType": "uuid" } },
+    { "name": "resellerOrgId", "type": ["null", { "type": "string", "logicalType": "uuid" }], "default": null },
+    { "name": "approvalRef", "type": ["null", "string"], "default": null, "doc": "approvalRequestId once approval-service decides; null for a direct decision by WAVER Commercial." },
+    { "name": "approvedAt", "type": { "type": "long", "logicalType": "timestamp-millis" } }
+  ]
+}

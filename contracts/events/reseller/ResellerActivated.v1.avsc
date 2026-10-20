@@ -1,0 +1,11 @@
+{
+  "type": "record",
+  "name": "ResellerActivated",
+  "namespace": "br.com.waver.events.reseller.v1",
+  "doc": "A reseller finished onboarding and may sell (APPROVED -> ACTIVE, RFC-0017 §2). tenant-service activates the reseller organization. Topic waver.reseller.reseller.v1, key resellerId.",
+  "fields": [
+    { "name": "resellerId", "type": { "type": "string", "logicalType": "uuid" } },
+    { "name": "resellerOrgId", "type": { "type": "string", "logicalType": "uuid" } },
+    { "name": "activatedAt", "type": { "type": "long", "logicalType": "timestamp-millis" } }
+  ]
+}

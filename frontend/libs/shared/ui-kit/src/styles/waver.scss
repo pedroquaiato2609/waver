@@ -1,0 +1,105 @@
+// WAVER design system entry (RFC-0021, ADR-0027). Apps include this once in their global styles.
+// Angular Material is themed *from* the WAVER tokens: every --mat-sys-* role points at a --wv-* semantic token,
+// so no screen ever shows Material's default palette, shapes or typography.
+@use '@angular/material' as mat;
+@use 'tokens';
+
+html {
+  color-scheme: light;
+  @include mat.theme((
+    color: (theme-type: light, primary: mat.$green-palette, tertiary: mat.$green-palette),
+    typography: (plain-family: 'Inter Variable', brand-family: 'Inter Variable'),
+    density: -2,
+  ));
+}
+
+html,
+[data-theme] {
+  // Color roles -> WAVER semantic tokens (light and dark come from tokens.css).
+  --mat-sys-primary: var(--wv-color-action-primary);
+  --mat-sys-on-primary: var(--wv-color-text-on-action);
+  --mat-sys-primary-container: var(--wv-color-action-selected-bg);
+  --mat-sys-on-primary-container: var(--wv-color-text-primary);
+  --mat-sys-surface: var(--wv-color-bg-surface);
+  --mat-sys-surface-container: var(--wv-color-bg-surface);
+  --mat-sys-surface-container-low: var(--wv-color-bg-canvas);
+  --mat-sys-surface-container-high: var(--wv-color-bg-surface-muted);
+  --mat-sys-surface-container-highest: var(--wv-color-bg-surface-muted);
+  --mat-sys-on-surface: var(--wv-color-text-primary);
+  --mat-sys-on-surface-variant: var(--wv-color-text-secondary);
+  --mat-sys-outline: var(--wv-color-border-control);
+  --mat-sys-outline-variant: var(--wv-color-border-subtle);
+  --mat-sys-error: var(--wv-color-status-danger);
+  --mat-sys-on-error: var(--wv-color-text-on-action);
+  // Shape: small radii from the tokens, never Material's pill buttons.
+  --mat-sys-corner-extra-small: var(--wv-radius-sm);
+  --mat-sys-corner-small: var(--wv-radius-md);
+  --mat-sys-corner-medium: var(--wv-radius-lg);
+  --mat-sys-corner-large: var(--wv-radius-lg);
+  --mat-sys-corner-full: var(--wv-radius-md);
+}
+
+[data-theme='dark'] {
+  color-scheme: dark;
+}
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  background: var(--wv-color-bg-canvas);
+  color: var(--wv-color-text-primary);
+  font-family: var(--wv-font-sans);
+  font-size: var(--wv-font-size-md);
+  line-height: var(--wv-line-height-normal);
+  -webkit-font-smoothing: antialiased;
+}
+
+h1, h2, h3 {
+  margin: 0;
+  font-weight: var(--wv-font-weight-semibold);
+  letter-spacing: -0.01em;
+  text-wrap: balance;
+}
+
+:focus-visible {
+  outline: 2px solid var(--wv-color-border-focus);
+  outline-offset: 2px;
+}
+
+// Dense data tables (custom component, RFC-0021): tabular figures, quiet rules, no zebra.
+.wv-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: var(--wv-font-size-sm);
+  font-variant-numeric: tabular-nums;
+
+  th {
+    text-align: left;
+    font-weight: var(--wv-font-weight-medium);
+    color: var(--wv-color-text-secondary);
+    padding: var(--wv-space-2) var(--wv-space-3);
+    border-bottom: 1px solid var(--wv-color-border-subtle);
+    white-space: nowrap;
+  }
+
+  td {
+    padding: 0 var(--wv-space-3);
+    height: var(--wv-table-row-height);
+    border-bottom: 1px solid var(--wv-color-border-subtle);
+  }
+
+  tbody tr:hover td {
+    background: var(--wv-color-action-selected-bg);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+  }
+}

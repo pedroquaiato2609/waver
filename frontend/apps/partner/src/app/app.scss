@@ -1,0 +1,152 @@
+// WAVER Partner shell. Light theme (BRAND_GUIDELINES §6) with the Forest rail shared by every WAVER app, so the
+// facet that marks the active item reads the same in Control and Partner. Content is dense and table-first.
+:host { display: block; min-height: 100%; }
+
+.shell {
+  display: grid;
+  grid-template-columns: 232px minmax(0, 1fr);
+  min-height: 100vh;
+}
+
+.rail {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  gap: var(--wv-space-6);
+  padding: var(--wv-space-5) var(--wv-space-3);
+  background: var(--wv-color-nav-bg);
+  border-right: 1px solid var(--wv-color-border-subtle);
+  box-sizing: border-box;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: var(--wv-space-3);
+  padding: 0 var(--wv-space-2);
+  text-decoration: none;
+  color: var(--wv-color-nav-text);
+
+  wv-symbol { width: 44px; }
+  .product { font-size: var(--wv-font-size-lg); font-weight: var(--wv-font-weight-semibold); letter-spacing: -0.01em; }
+}
+
+ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 2px; }
+
+ul a {
+  position: relative;
+  display: block;
+  padding: var(--wv-space-2) var(--wv-space-3) var(--wv-space-2) var(--wv-space-5);
+  border-radius: var(--wv-radius-md);
+  color: var(--wv-color-nav-text-muted);
+  text-decoration: none;
+  font-size: var(--wv-font-size-md);
+
+  &:hover { color: var(--wv-color-nav-text); background: color-mix(in srgb, var(--wv-color-nav-item-active-bg) 60%, transparent); }
+
+  &.active {
+    color: var(--wv-color-nav-text);
+    background: var(--wv-color-nav-item-active-bg);
+    font-weight: var(--wv-font-weight-medium);
+
+    &::before {
+      content: '';
+      position: absolute;
+      left: 6px;
+      top: 50%;
+      width: 9px;
+      height: 16px;
+      translate: 0 -50%;
+      background: var(--wv-color-nav-indicator);
+      clip-path: polygon(0 0, 100% 22%, 62% 100%);
+    }
+  }
+}
+
+.who {
+  margin-top: auto;
+  display: grid;
+  grid-template-columns: 32px minmax(0, 1fr);
+  gap: var(--wv-space-1) var(--wv-space-3);
+  align-items: center;
+  padding: var(--wv-space-3) var(--wv-space-2) 0;
+  border-top: 1px solid var(--wv-color-border-subtle);
+}
+
+.avatar {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  background: var(--wv-color-nav-item-active-bg);
+  color: var(--wv-color-nav-text);
+  font-size: var(--wv-font-size-xs);
+  font-weight: var(--wv-font-weight-semibold);
+}
+
+.identity { display: grid; min-width: 0; }
+.name { font-size: var(--wv-font-size-sm); color: var(--wv-color-nav-text); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.org { font-size: var(--wv-font-size-xs); color: var(--wv-color-nav-text-muted); }
+
+.signout {
+  grid-column: 2;
+  justify-self: start;
+  font: inherit;
+  font-size: var(--wv-font-size-xs);
+  color: var(--wv-color-nav-text-muted);
+  background: none;
+  border: 0;
+  padding: 0;
+  cursor: pointer;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  &:hover { color: var(--wv-color-nav-text); }
+}
+
+.content {
+  padding: var(--wv-space-10) var(--wv-space-10) var(--wv-space-12);
+  max-width: 1200px;
+  box-sizing: border-box;
+}
+
+// Sign-in gate: the symbol drawn large, bleeding off the left edge, with the copy beside it.
+.gate {
+  min-height: 100vh;
+  display: grid;
+  grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr);
+  align-items: center;
+  overflow: hidden;
+  background: var(--wv-color-bg-canvas);
+}
+
+.gate-symbol {
+  width: min(58vw, 760px);
+  margin-left: -12vw;
+}
+
+.gate-text {
+  display: grid;
+  gap: var(--wv-space-4);
+  justify-items: start;
+  max-width: 420px;
+  padding: var(--wv-space-8);
+
+  h1 { font-size: var(--wv-font-size-3xl); line-height: var(--wv-line-height-tight); }
+  p { margin: 0; color: var(--wv-color-text-secondary); font-size: var(--wv-font-size-lg); }
+  .fine { font-size: var(--wv-font-size-sm); }
+}
+
+.booting { min-height: 100vh; background: var(--wv-color-bg-canvas); }
+
+@media (max-width: 860px) {
+  .shell { grid-template-columns: 1fr; }
+  .rail { position: static; height: auto; flex-direction: row; flex-wrap: wrap; align-items: center; }
+  ul { grid-auto-flow: column; }
+  .who { margin-top: 0; margin-left: auto; border-top: 0; }
+  .content { padding: var(--wv-space-6) var(--wv-space-4); }
+  .gate { grid-template-columns: 1fr; }
+  .gate-symbol { width: 120vw; margin: -10vh 0 0 -30vw; }
+}

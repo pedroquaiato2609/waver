@@ -1,0 +1,15 @@
+{
+  "type": "record",
+  "name": "AvailabilityChanged",
+  "namespace": "br.com.waver.events.marketplace.v1",
+  "doc": "The AvailabilityRule of a Listing changed: which resellers may sell it (RFC-0017 §5). Topic waver.marketplace.listing.v1, key listingId.",
+  "fields": [
+    { "name": "listingId", "type": { "type": "string", "logicalType": "uuid" } },
+    { "name": "mode", "type": "string", "doc": "ALL_RESELLERS, TIERS or RESELLERS" },
+    { "name": "include", "type": { "type": "array", "items": "string" }, "default": [], "doc": "Tier keys (TIERS) or reseller organization IDs (RESELLERS)" },
+    { "name": "exclude", "type": { "type": "array", "items": "string" }, "default": [], "doc": "Reseller organization IDs excluded in any mode" },
+    { "name": "validFrom", "type": ["null", { "type": "long", "logicalType": "timestamp-millis" }], "default": null },
+    { "name": "validTo", "type": ["null", { "type": "long", "logicalType": "timestamp-millis" }], "default": null },
+    { "name": "changedAt", "type": { "type": "long", "logicalType": "timestamp-millis" } }
+  ]
+}

@@ -1,0 +1,16 @@
+{
+  "type": "record",
+  "name": "ListingPublished",
+  "namespace": "br.com.waver.events.marketplace.v1",
+  "doc": "A ListingVersion was published and is now the current version of its Listing (RFC-0017 §5). Topic waver.marketplace.listing.v1, key listingId.",
+  "fields": [
+    { "name": "listingId", "type": { "type": "string", "logicalType": "uuid" } },
+    { "name": "listingKey", "type": "string" },
+    { "name": "productId", "type": { "type": "string", "logicalType": "uuid" } },
+    { "name": "listingVersionId", "type": { "type": "string", "logicalType": "uuid" } },
+    { "name": "versionNo", "type": "int" },
+    { "name": "skuIds", "type": { "type": "array", "items": "string" }, "default": [], "doc": "UUIDs of the catalog SKUs offered by this version" },
+    { "name": "approvedBy", "type": "string", "doc": "Principal that approved the publication (LISTING_PUBLICATION; WAVER Product Ops until approval-service exists)" },
+    { "name": "publishedAt", "type": { "type": "long", "logicalType": "timestamp-millis" } }
+  ]
+}

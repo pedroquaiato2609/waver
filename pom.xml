@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- WAVER monorepo aggregator (ADR-0015). Builds every Java module; services never depend on each other. -->
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>br.com.waver</groupId>
+    <artifactId>waver</artifactId>
+    <version>0.1.0-SNAPSHOT</version>
+    <packaging>pom</packaging>
+    <name>WAVER monorepo</name>
+
+    <modules>
+        <module>platform/java/waver-platform-bom</module>
+        <module>platform/java/waver-parent</module>
+        <module>contracts/events</module>
+        <module>platform/java/waver-domain-kernel</module>
+        <module>platform/java/waver-platform-starter</module>
+        <module>platform/java/waver-platform-test</module>
+        <module>services/tenant-service</module>
+        <module>services/audit-service</module>
+        <module>services/identity-access-service</module>
+        <module>services/reseller-service</module>
+        <module>services/customer-service</module>
+        <module>services/catalog-service</module>
+        <module>services/marketplace-service</module>
+        <module>services/control-bff</module>
+        <module>services/partner-bff</module>
+        <module>services/edge-gateway</module>
+    </modules>
+</project>

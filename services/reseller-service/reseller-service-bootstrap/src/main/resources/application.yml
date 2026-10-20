@@ -1,0 +1,60 @@
+spring:
+  application:
+    name: reseller-service
+  config:
+    import: "optional:vault://secret/waver/${waver.env:local}/reseller-service"
+  cloud:
+    vault:
+      uri: ${VAULT_ADDR:http://localhost:8200}
+      token: ${VAULT_TOKEN:}
+      kv:
+        enabled: true
+        backend: secret
+  datasource:
+    url: jdbc:postgresql://${DB_HOST:localhost}:${DB_PORT:5433}/waver_reseller
+    username: reseller_app
+    password: ${db.password}
+    hikari:
+      maximum-pool-size: 10
+  flyway:
+    url: ${spring.datasource.url}   # explicit: the RLS wrapper hides the pool URL from Flyway
+    user: reseller_owner
+    password: ${db.password}
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: ${KEYCLOAK_ISSUER:http://localhost:8180/realms/waver}
+          audiences: waver-services
+
+server:
+  port: 8094
+
+waver:
+  platform-org-id: ${WAVER_PLATFORM_ORG_ID}
+  events:
+    registry-url: ${APICURIO_URL:http://localhost:8085/apis/registry/v3}
+  service-auth:
+    client-id: svc-reseller-service      # secret: keycloak.client-secret in Vault
+  services:
+    tenant-service: ${TENANT_SERVICE_URL:http://localhost:8091}
+    identity-access-service: ${IDENTITY_ACCESS_SERVICE_URL:http://localhost:8093}
+  temporal:
+    target: ${TEMPORAL_ADDRESS:localhost:7233}
+    namespace: waver-commercial
+  reseller:
+    activation:
+      # CATALOG_ASSIGNED: WAVER Product Ops made listings available to the reseller (marketplace-service);
+      # PRICING_RULES_SET: WAVER Commercial set its margin band and discount limit (catalog-service). Both are
+      # confirmed by WAVER Commercial in the checklist (RFC-0017 §2).
+      required-items: DUE_DILIGENCE,COMMERCIAL_APPROVAL,AGREEMENT_SIGNED,ORGANIZATION_CREATED,CATALOG_ASSIGNED,PRICING_RULES_SET,ADMIN_INVITED,TRAINING_DONE
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info
+  endpoint:
+    health:
+      probes:
+        enabled: true

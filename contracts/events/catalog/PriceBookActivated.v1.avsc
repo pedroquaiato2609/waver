@@ -1,0 +1,17 @@
+{
+  "type": "record",
+  "name": "PriceBookActivated",
+  "namespace": "br.com.waver.events.catalog.v1",
+  "doc": "A PriceBook became ACTIVE (RFC-0017 §4). The book it replaces for the same scope and currency, if any, is RETIRED in the same transaction and stays readable (quotes and contracts snapshot prices). Amounts are read by API, never carried here. Topic waver.catalog.price-book.v1, key priceBookId.",
+  "fields": [
+    { "name": "priceBookId", "type": { "type": "string", "logicalType": "uuid" } },
+    { "name": "scope", "type": "string", "doc": "GLOBAL, TIER or RESELLER" },
+    { "name": "scopeRef", "type": ["null", "string"], "default": null, "doc": "Tier key or reseller organization ID; null for GLOBAL" },
+    { "name": "currency", "type": "string", "doc": "ISO 4217" },
+    { "name": "validFrom", "type": { "type": "long", "logicalType": "timestamp-millis" } },
+    { "name": "validTo", "type": ["null", { "type": "long", "logicalType": "timestamp-millis" }], "default": null },
+    { "name": "skuIds", "type": { "type": "array", "items": "string" }, "default": [], "doc": "UUIDs of the SKUs priced by the book" },
+    { "name": "supersededPriceBookId", "type": ["null", { "type": "string", "logicalType": "uuid" }], "default": null },
+    { "name": "activatedAt", "type": { "type": "long", "logicalType": "timestamp-millis" } }
+  ]
+}

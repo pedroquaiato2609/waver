@@ -1,0 +1,62 @@
+{
+  "compileOnSave": false,
+  "compilerOptions": {
+    "rootDir": ".",
+    "sourceMap": true,
+    "declaration": false,
+    "moduleResolution": "bundler",
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "importHelpers": true,
+    "target": "es2022",
+    "module": "esnext",
+    "lib": [
+      "es2022",
+      "dom"
+    ],
+    "skipLibCheck": true,
+    "skipDefaultLibCheck": true,
+    "paths": {
+      "@waver/shared-ui-kit": [
+        "./libs/shared/ui-kit/src/index.ts"
+      ],
+      "@waver/shared-data-access-app-state": [
+        "./libs/shared/data-access-app-state/src/index.ts"
+      ],
+      "@waver/control-data-access-api": [
+        "./libs/control/data-access-api/src/index.ts"
+      ],
+      "@waver/control-feature-organizations": [
+        "./libs/control/feature-organizations/src/index.ts"
+      ],
+      "@waver/control-feature-audit": [
+        "./libs/control/feature-audit/src/index.ts"
+      ],
+      "@waver/control-feature-resellers": [
+        "./libs/control/feature-resellers/src/index.ts"
+      ],
+      "@waver/control-feature-catalog": [
+        "./libs/control/feature-catalog/src/index.ts"
+      ],
+      "@waver/control-feature-marketplace": [
+        "./libs/control/feature-marketplace/src/index.ts"
+      ],
+      "@waver/partner-data-access-api": [
+        "./libs/partner/data-access-api/src/index.ts"
+      ],
+      "@waver/partner-feature-customers": [
+        "./libs/partner/feature-customers/src/index.ts"
+      ],
+      "@waver/partner-feature-account": [
+        "./libs/partner/feature-account/src/index.ts"
+      ],
+      "@waver/partner-feature-offers": [
+        "./libs/partner/feature-offers/src/index.ts"
+      ]
+    }
+  },
+  "exclude": [
+    "node_modules",
+    "tmp"
+  ]
+}

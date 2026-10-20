@@ -1,0 +1,273 @@
+{
+  "realm": "waver",
+  "displayName": "WAVER",
+  "enabled": true,
+  "organizationsEnabled": true,
+  "loginTheme": "waver",
+  "internationalizationEnabled": true,
+  "supportedLocales": [
+    "pt-BR",
+    "en"
+  ],
+  "defaultLocale": "pt-BR",
+  "registrationAllowed": false,
+  "resetPasswordAllowed": true,
+  "rememberMe": false,
+  "loginWithEmailAllowed": true,
+  "duplicateEmailsAllowed": false,
+  "bruteForceProtected": true,
+  "sslRequired": "external",
+  "accessTokenLifespan": 300,
+  "ssoSessionIdleTimeout": 1800,
+  "ssoSessionMaxLifespan": 36000,
+  "otpPolicyType": "totp",
+  "otpPolicyAlgorithm": "HmacSHA1",
+  "otpPolicyDigits": 6,
+  "otpPolicyPeriod": 30,
+  "passwordPolicy": "length(12) and notUsername",
+  "roles": {
+    "realm": [
+      {
+        "name": "PLATFORM_SERVICE",
+        "description": "Service account of a WAVER service acting for the platform (never a person)"
+      },
+      {
+        "name": "PLATFORM_SUPER_ADMIN",
+        "description": "WAVER super admin: full governance, audited"
+      },
+      {
+        "name": "WAVER_COMMERCIAL",
+        "description": "Resellers, pricing, contracts, commercial catalog"
+      },
+      {
+        "name": "WAVER_FINANCE",
+        "description": "Billing, invoices, payments, dunning"
+      },
+      {
+        "name": "WAVER_PRODUCT_OPS",
+        "description": "Marketplace listings and lifecycle"
+      },
+      {
+        "name": "WAVER_SUPPORT",
+        "description": "L2/L3 support with controlled access"
+      },
+      {
+        "name": "RESELLER_OWNER",
+        "description": "Reseller portfolio, contracts, users"
+      },
+      {
+        "name": "RESELLER_SALES",
+        "description": "Customers, quotes, contracts"
+      },
+      {
+        "name": "RESELLER_FINANCE",
+        "description": "Reseller billing and suspension"
+      },
+      {
+        "name": "RESELLER_SUPPORT",
+        "description": "Reseller L1 support"
+      },
+      {
+        "name": "CUSTOMER_ADMIN",
+        "description": "Customer workspace administration"
+      },
+      {
+        "name": "CUSTOMER_OPERATOR",
+        "description": "Customer operational use"
+      }
+    ]
+  },
+  "components": {
+    "org.keycloak.userprofile.UserProfileProvider": [
+      {
+        "providerId": "declarative-user-profile",
+        "subComponents": {},
+        "config": {
+          "kc.user.profile.config": [
+            "{\"unmanagedAttributePolicy\":\"ADMIN_VIEW\",\"attributes\":[{\"name\":\"username\",\"displayName\":\"${username}\",\"validations\":{\"length\":{\"min\":3,\"max\":255},\"username-prohibited-characters\":{},\"up-username-not-idn-homograph\":{}},\"permissions\":{\"view\":[\"admin\",\"user\"],\"edit\":[\"admin\",\"user\"]},\"multivalued\":false},{\"name\":\"email\",\"displayName\":\"${email}\",\"validations\":{\"email\":{},\"length\":{\"max\":255}},\"required\":{\"roles\":[\"user\"]},\"permissions\":{\"view\":[\"admin\",\"user\"],\"edit\":[\"admin\",\"user\"]},\"multivalued\":false},{\"name\":\"firstName\",\"displayName\":\"${firstName}\",\"validations\":{\"length\":{\"max\":255},\"person-name-prohibited-characters\":{}},\"required\":{\"roles\":[\"user\"]},\"permissions\":{\"view\":[\"admin\",\"user\"],\"edit\":[\"admin\",\"user\"]},\"multivalued\":false},{\"name\":\"lastName\",\"displayName\":\"${lastName}\",\"validations\":{\"length\":{\"max\":255},\"person-name-prohibited-characters\":{}},\"required\":{\"roles\":[\"user\"]},\"permissions\":{\"view\":[\"admin\",\"user\"],\"edit\":[\"admin\",\"user\"]},\"multivalued\":false},{\"name\":\"org_id\",\"displayName\":\"WAVER organization\",\"permissions\":{\"view\":[\"admin\"],\"edit\":[\"admin\"]},\"multivalued\":false},{\"name\":\"org_type\",\"displayName\":\"WAVER organization type\",\"permissions\":{\"view\":[\"admin\"],\"edit\":[\"admin\"]},\"multivalued\":false}],\"groups\":[{\"name\":\"user-metadata\",\"displayHeader\":\"User metadata\",\"displayDescription\":\"Attributes, which refer to user metadata\"}]}"
+          ]
+        }
+      }
+    ]
+  },
+  "clients": [
+    {
+      "clientId": "waver-control-bff",
+      "name": "WAVER Control (BFF)",
+      "enabled": true,
+      "protocol": "openid-connect",
+      "publicClient": false,
+      "clientAuthenticatorType": "client-secret",
+      "secret": "${CONTROL_BFF_CLIENT_SECRET}",
+      "standardFlowEnabled": true,
+      "directAccessGrantsEnabled": false,
+      "serviceAccountsEnabled": false,
+      "redirectUris": [
+        "http://localhost:8080/login/oauth2/code/keycloak",
+        "http://control.localhost:8080/login/oauth2/code/keycloak"
+      ],
+      "webOrigins": [
+        "http://localhost:8080",
+        "http://control.localhost:8080"
+      ],
+      "attributes": {
+        "pkce.code.challenge.method": "S256",
+        "post.logout.redirect.uris": "http://localhost:8080/##http://control.localhost:8080/"
+      },
+      "defaultClientScopes": [
+        "profile",
+        "email",
+        "basic",
+        "acr",
+        "roles",
+        "web-origins"
+      ],
+      "optionalClientScopes": [
+        "offline_access"
+      ],
+      "protocolMappers": "__WAVER_CLAIM_MAPPERS__"
+    },
+    {
+      "clientId": "waver-partner-bff",
+      "name": "WAVER Partner (BFF)",
+      "enabled": true,
+      "protocol": "openid-connect",
+      "publicClient": false,
+      "clientAuthenticatorType": "client-secret",
+      "secret": "${PARTNER_BFF_CLIENT_SECRET}",
+      "standardFlowEnabled": true,
+      "directAccessGrantsEnabled": false,
+      "serviceAccountsEnabled": false,
+      "redirectUris": [
+        "http://partner.localhost:8080/login/oauth2/code/keycloak",
+        "http://partner.localhost:8080/*"
+      ],
+      "webOrigins": [
+        "http://partner.localhost:8080"
+      ],
+      "attributes": {
+        "pkce.code.challenge.method": "S256",
+        "post.logout.redirect.uris": "http://partner.localhost:8080/"
+      },
+      "defaultClientScopes": [
+        "profile",
+        "email",
+        "basic",
+        "acr",
+        "roles",
+        "web-origins"
+      ],
+      "optionalClientScopes": [
+        "offline_access"
+      ],
+      "protocolMappers": "__WAVER_CLAIM_MAPPERS__"
+    },
+    {
+      "clientId": "svc-identity-access-service",
+      "name": "identity-access-service (service account)",
+      "enabled": true,
+      "protocol": "openid-connect",
+      "publicClient": false,
+      "clientAuthenticatorType": "client-secret",
+      "secret": "${IDENTITY_SVC_CLIENT_SECRET}",
+      "standardFlowEnabled": false,
+      "directAccessGrantsEnabled": false,
+      "serviceAccountsEnabled": true,
+      "defaultClientScopes": [
+        "basic",
+        "roles"
+      ]
+    },
+    {
+      "clientId": "svc-reseller-service",
+      "name": "reseller-service (service account)",
+      "enabled": true,
+      "protocol": "openid-connect",
+      "publicClient": false,
+      "clientAuthenticatorType": "client-secret",
+      "secret": "${RESELLER_SVC_CLIENT_SECRET}",
+      "standardFlowEnabled": false,
+      "directAccessGrantsEnabled": false,
+      "serviceAccountsEnabled": true,
+      "defaultClientScopes": [
+        "basic",
+        "roles"
+      ],
+      "protocolMappers": "__WAVER_CLAIM_MAPPERS__"
+    }
+  ],
+  "users": [
+    {
+      "username": "service-account-svc-identity-access-service",
+      "enabled": true,
+      "serviceAccountClientId": "svc-identity-access-service",
+      "clientRoles": {
+        "realm-management": [
+          "manage-users",
+          "view-users",
+          "manage-realm",
+          "view-realm",
+          "query-users"
+        ]
+      }
+    },
+    {
+      "username": "service-account-svc-reseller-service",
+      "enabled": true,
+      "serviceAccountClientId": "svc-reseller-service",
+      "attributes": {
+        "org_id": [
+          "${WAVER_PLATFORM_ORG_ID}"
+        ],
+        "org_type": [
+          "PLATFORM"
+        ]
+      },
+      "realmRoles": [
+        "PLATFORM_SERVICE",
+        "default-roles-waver"
+      ]
+    },
+    {
+      "username": "admin@waver.local",
+      "email": "admin@waver.local",
+      "emailVerified": true,
+      "firstName": "Administrador",
+      "lastName": "WAVER",
+      "enabled": true,
+      "attributes": {
+        "org_id": [
+          "${WAVER_PLATFORM_ORG_ID}"
+        ],
+        "org_type": [
+          "PLATFORM"
+        ]
+      },
+      "credentials": [
+        {
+          "type": "password",
+          "value": "${WAVER_ADMIN_PASSWORD}",
+          "temporary": false
+        }
+      ],
+      "realmRoles": [
+        "PLATFORM_SUPER_ADMIN",
+        "default-roles-waver"
+      ],
+      "requiredActions": [
+        "CONFIGURE_TOTP"
+      ]
+    }
+  ],
+  "smtpServer": {
+    "host": "mailpit",
+    "port": "1025",
+    "from": "nao-responda@waver.local",
+    "fromDisplayName": "WAVER",
+    "replyTo": "",
+    "ssl": "false",
+    "starttls": "false",
+    "auth": "false"
+  },
+  "emailTheme": "keycloak"
+}

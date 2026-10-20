@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- customer-service: CustomerProfile, CustomerOwnership, contacts (RFC-0017 §3). -->
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>br.com.waver.platform</groupId>
+        <artifactId>waver-parent</artifactId>
+        <version>0.1.0-SNAPSHOT</version>
+        <relativePath>../../platform/java/waver-parent/pom.xml</relativePath>
+    </parent>
+
+    <groupId>br.com.waver.services.customer</groupId>
+    <artifactId>customer-service</artifactId>
+    <packaging>pom</packaging>
+
+    <properties>
+        <waver.service.group>customer</waver.service.group>
+    </properties>
+
+    <modules>
+        <module>customer-service-domain</module>
+        <module>customer-service-application</module>
+        <module>customer-service-adapters</module>
+        <module>customer-service-bootstrap</module>
+    </modules>
+</project>

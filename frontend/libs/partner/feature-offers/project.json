@@ -1,0 +1,16 @@
+{
+  "name": "partner-feature-offers",
+  "$schema": "../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/partner/feature-offers/src",
+  "prefix": "wv",
+  "projectType": "library",
+  "tags": [
+    "scope:partner",
+    "type:feature"
+  ],
+  "targets": {
+    "lint": {
+      "executor": "@nx/eslint:lint"
+    }
+  }
+}

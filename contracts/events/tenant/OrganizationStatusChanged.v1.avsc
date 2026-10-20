@@ -1,0 +1,13 @@
+{
+  "type": "record",
+  "name": "OrganizationStatusChanged",
+  "namespace": "br.com.waver.events.tenant.v1",
+  "doc": "The status of a WAVER Organization changed, e.g. PENDING -> ACTIVE (RFC-0003). Statuses as strings: PENDING, ACTIVE, SUSPENDED, TERMINATED. Topic waver.tenant.organization.v1, key organizationId.",
+  "fields": [
+    { "name": "organizationId", "type": { "type": "string", "logicalType": "uuid" } },
+    { "name": "orgType", "type": "string" },
+    { "name": "fromStatus", "type": "string" },
+    { "name": "toStatus", "type": "string" },
+    { "name": "changedAt", "type": { "type": "long", "logicalType": "timestamp-millis" } }
+  ]
+}

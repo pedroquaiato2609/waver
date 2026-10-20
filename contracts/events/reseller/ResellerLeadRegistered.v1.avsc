@@ -1,0 +1,11 @@
+{
+  "type": "record",
+  "name": "ResellerLeadRegistered",
+  "namespace": "br.com.waver.events.reseller.v1",
+  "doc": "A reseller lead was registered by WAVER Commercial (RFC-0017 §2). Topic waver.reseller.reseller.v1, key resellerId.",
+  "fields": [
+    { "name": "resellerId", "type": { "type": "string", "logicalType": "uuid" } },
+    { "name": "legalName", "type": "string", "doc": "Company legal name (not personal data)." },
+    { "name": "registeredAt", "type": { "type": "long", "logicalType": "timestamp-millis" } }
+  ]
+}

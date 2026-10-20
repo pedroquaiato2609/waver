@@ -1,0 +1,55 @@
+[
+  {
+    "name": "org_id",
+    "protocol": "openid-connect",
+    "protocolMapper": "oidc-usermodel-attribute-mapper",
+    "config": {
+      "user.attribute": "org_id",
+      "claim.name": "org_id",
+      "jsonType.label": "String",
+      "access.token.claim": "true",
+      "id.token.claim": "true",
+      "userinfo.token.claim": "true",
+      "introspection.token.claim": "true"
+    }
+  },
+  {
+    "name": "org_type",
+    "protocol": "openid-connect",
+    "protocolMapper": "oidc-usermodel-attribute-mapper",
+    "config": {
+      "user.attribute": "org_type",
+      "claim.name": "org_type",
+      "jsonType.label": "String",
+      "access.token.claim": "true",
+      "id.token.claim": "true",
+      "userinfo.token.claim": "true",
+      "introspection.token.claim": "true"
+    }
+  },
+  {
+    "name": "roles",
+    "protocol": "openid-connect",
+    "protocolMapper": "oidc-usermodel-realm-role-mapper",
+    "config": {
+      "claim.name": "roles",
+      "jsonType.label": "String",
+      "multivalued": "true",
+      "access.token.claim": "true",
+      "id.token.claim": "true",
+      "userinfo.token.claim": "true",
+      "introspection.token.claim": "true"
+    }
+  },
+  {
+    "name": "waver-services-audience",
+    "protocol": "openid-connect",
+    "protocolMapper": "oidc-audience-mapper",
+    "config": {
+      "included.custom.audience": "waver-services",
+      "access.token.claim": "true",
+      "id.token.claim": "false",
+      "introspection.token.claim": "true"
+    }
+  }
+]

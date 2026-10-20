@@ -1,0 +1,60 @@
+spring:
+  application:
+    name: tenant-service
+  config:
+    # Secrets come from Vault (ADR-0022). Locally: dev Vault with a token; in Kubernetes: Kubernetes auth.
+    import: "optional:vault://secret/waver/${waver.env:local}/tenant-service"
+  cloud:
+    vault:
+      uri: ${VAULT_ADDR:http://localhost:8200}
+      token: ${VAULT_TOKEN:}
+      kv:
+        enabled: true
+        backend: secret
+  datasource:
+    url: jdbc:postgresql://${DB_HOST:localhost}:${DB_PORT:5433}/waver_tenant
+    username: tenant_app
+    password: ${db.password}
+    hikari:
+      maximum-pool-size: 10
+  flyway:
+    url: ${spring.datasource.url}   # explicit: the RLS wrapper hides the pool URL from Flyway
+    user: tenant_owner
+    password: ${db.password}
+    placeholders:
+      platformOrgId: ${WAVER_PLATFORM_ORG_ID}
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: ${KEYCLOAK_ISSUER:http://localhost:8180/realms/waver}
+          audiences: waver-services
+  kafka:
+    bootstrap-servers: ${KAFKA_BOOTSTRAP:localhost:9092}
+    consumer:
+      auto-offset-reset: earliest
+      enable-auto-commit: false
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: io.apicurio.registry.serde.avro.AvroKafkaDeserializer
+      properties:
+        apicurio.registry.url: ${APICURIO_URL:http://localhost:8085/apis/registry/v3}
+        apicurio.registry.use-specific-avro-reader: true
+        apicurio.registry.headers.enabled: false
+
+server:
+  port: 8091
+
+waver:
+  platform-org-id: ${WAVER_PLATFORM_ORG_ID}
+  events:
+    registry-url: ${APICURIO_URL:http://localhost:8085/apis/registry/v3}
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info
+  endpoint:
+    health:
+      probes:
+        enabled: true

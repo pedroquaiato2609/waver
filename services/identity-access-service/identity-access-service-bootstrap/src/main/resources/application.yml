@@ -1,0 +1,60 @@
+spring:
+  application:
+    name: identity-access-service
+  config:
+    import: "optional:vault://secret/waver/${waver.env:local}/identity-access-service"
+  cloud:
+    vault:
+      uri: ${VAULT_ADDR:http://localhost:8200}
+      token: ${VAULT_TOKEN:}
+      kv:
+        enabled: true
+        backend: secret
+  datasource:
+    url: jdbc:postgresql://${DB_HOST:localhost}:${DB_PORT:5433}/waver_identity_access
+    username: identity_access_app
+    password: ${db.password}
+  flyway:
+    url: ${spring.datasource.url}   # explicit: the RLS wrapper hides the pool URL from Flyway
+    user: identity_access_owner
+    password: ${db.password}
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: ${KEYCLOAK_ISSUER:http://localhost:8180/realms/waver}
+          audiences: waver-services
+  kafka:
+    bootstrap-servers: ${KAFKA_BOOTSTRAP:localhost:9092}
+    consumer:
+      auto-offset-reset: earliest
+      enable-auto-commit: false
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: io.apicurio.registry.serde.avro.AvroKafkaDeserializer
+      properties:
+        apicurio.registry.url: ${APICURIO_URL:http://localhost:8085/apis/registry/v3}
+        apicurio.registry.use-specific-avro-reader: true
+        apicurio.registry.headers.enabled: false
+
+server:
+  port: 8093
+
+waver:
+  platform-org-id: ${WAVER_PLATFORM_ORG_ID}
+  events:
+    registry-url: ${APICURIO_URL:http://localhost:8085/apis/registry/v3}
+  keycloak:
+    base-url: ${KEYCLOAK_URL:http://localhost:8180}
+    realm: waver
+    client-id: svc-identity-access-service
+  invitations:
+    apps:
+      RESELLER:
+        client-id: waver-partner-bff
+        redirect-uri: ${WAVER_PARTNER_URL:http://partner.localhost:8080}/
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info

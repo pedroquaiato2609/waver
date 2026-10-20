@@ -1,0 +1,14 @@
+{
+  "type": "record",
+  "name": "ProductPublished",
+  "namespace": "br.com.waver.events.catalog.v1",
+  "doc": "WAVER Product Ops published a catalog Product with its SKUs (RFC-0017 §4). IDs and keys only, no prices. Topic waver.catalog.product.v1, key productId.",
+  "fields": [
+    { "name": "productId", "type": { "type": "string", "logicalType": "uuid" } },
+    { "name": "productKey", "type": "string" },
+    { "name": "itemType", "type": "string", "doc": "PRODUCT, TOOL, CONNECTOR, SOLUTION_PACK, CHANNEL, CAPACITY or SERVICE (Commercial §5.1)" },
+    { "name": "technicalRef", "type": ["null", "string"], "default": null, "doc": "toolId, connectorId or channel type" },
+    { "name": "skuIds", "type": { "type": "array", "items": "string" }, "default": [], "doc": "UUIDs of the SKUs of the product" },
+    { "name": "publishedAt", "type": { "type": "long", "logicalType": "timestamp-millis" } }
+  ]
+}

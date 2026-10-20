@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="-40 -40 1136 283" role="img" aria-labelledby="t">
+  <title id="t">WAVER - Ideias em movimento</title>
+  <rect x="-40" y="-40" width="1136" height="283" fill="#0F3D2E"/>
+  <polygon points="0,7 151,0 215,81 113,203" fill="#F7F6F2"/>
+  <polygon points="174,63 260,68 345,14 248,203" fill="#A7C4B0"/>
+  <polygon points="270,85 435,0 338,190" fill="#F7F6F2"/>
+  <!-- Wordmark set in Inter (brand typeface). Convert to outlines in the final master file. -->
+  <text x="496" y="130" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="128" font-weight="400" letter-spacing="38" fill="#F7F6F2">WAVER</text>
+  <text x="500" y="196" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="30" font-weight="500" letter-spacing="9" fill="#F7F6F2">IDEIAS EM MOVIMENTO</text>
+</svg>

@@ -1,0 +1,13 @@
+{
+  "name": "control-data-access-api",
+  "$schema": "../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/control/data-access-api/src",
+  "prefix": "wv",
+  "projectType": "library",
+  "tags": ["scope:control", "type:data-access"],
+  "targets": {
+    "lint": {
+      "executor": "@nx/eslint:lint"
+    }
+  }
+}

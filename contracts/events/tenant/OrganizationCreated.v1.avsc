@@ -1,0 +1,14 @@
+{
+  "type": "record",
+  "name": "OrganizationCreated",
+  "namespace": "br.com.waver.events.tenant.v1",
+  "doc": "A WAVER Organization (PLATFORM, RESELLER or CUSTOMER) was created. Topic waver.tenant.organization.v1, key organizationId.",
+  "fields": [
+    { "name": "organizationId", "type": { "type": "string", "logicalType": "uuid" } },
+    { "name": "orgType", "type": { "type": "enum", "name": "OrgType", "symbols": ["PLATFORM", "RESELLER", "CUSTOMER", "UNKNOWN"], "default": "UNKNOWN" } },
+    { "name": "status", "type": { "type": "enum", "name": "OrganizationStatus", "symbols": ["PENDING", "ACTIVE", "SUSPENDED", "TERMINATED", "UNKNOWN"], "default": "UNKNOWN" } },
+    { "name": "parentOrgId", "type": ["null", { "type": "string", "logicalType": "uuid" }], "default": null },
+    { "name": "legalName", "type": "string", "doc": "Company legal name (not personal data)." },
+    { "name": "createdAt", "type": { "type": "long", "logicalType": "timestamp-millis" } }
+  ]
+}

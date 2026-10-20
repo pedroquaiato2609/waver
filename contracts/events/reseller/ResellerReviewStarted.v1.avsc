@@ -1,0 +1,10 @@
+{
+  "type": "record",
+  "name": "ResellerReviewStarted",
+  "namespace": "br.com.waver.events.reseller.v1",
+  "doc": "Due diligence of a reseller lead started (LEAD -> UNDER_REVIEW, RFC-0017 §2). Topic waver.reseller.reseller.v1, key resellerId.",
+  "fields": [
+    { "name": "resellerId", "type": { "type": "string", "logicalType": "uuid" } },
+    { "name": "startedAt", "type": { "type": "long", "logicalType": "timestamp-millis" } }
+  ]
+}

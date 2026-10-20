@@ -1,0 +1,16 @@
+{
+  "name": "partner-data-access-api",
+  "$schema": "../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/partner/data-access-api/src",
+  "prefix": "wv",
+  "projectType": "library",
+  "tags": [
+    "scope:partner",
+    "type:data-access"
+  ],
+  "targets": {
+    "lint": {
+      "executor": "@nx/eslint:lint"
+    }
+  }
+}

@@ -1,0 +1,13 @@
+{
+  "type": "record",
+  "name": "UserInvited",
+  "namespace": "br.com.waver.events.identity.v1",
+  "doc": "A user was invited to an organization (RFC-0004 §Invitation). The e-mail address is not in the event (STD-009). Topic waver.identity.user.v1, key userId.",
+  "fields": [
+    { "name": "invitationId", "type": { "type": "string", "logicalType": "uuid" } },
+    { "name": "userId", "type": "string", "doc": "Keycloak user ID." },
+    { "name": "orgId", "type": { "type": "string", "logicalType": "uuid" } },
+    { "name": "roleKey", "type": "string" },
+    { "name": "expiresAt", "type": { "type": "long", "logicalType": "timestamp-millis" } }
+  ]
+}

@@ -1,0 +1,11 @@
+{
+  "type": "record",
+  "name": "ResellerRejected",
+  "namespace": "br.com.waver.events.reseller.v1",
+  "doc": "A reseller lead was rejected (UNDER_REVIEW -> REJECTED, RFC-0017 §2). Topic waver.reseller.reseller.v1, key resellerId.",
+  "fields": [
+    { "name": "resellerId", "type": { "type": "string", "logicalType": "uuid" } },
+    { "name": "approvalRef", "type": ["null", "string"], "default": null },
+    { "name": "rejectedAt", "type": { "type": "long", "logicalType": "timestamp-millis" } }
+  ]
+}

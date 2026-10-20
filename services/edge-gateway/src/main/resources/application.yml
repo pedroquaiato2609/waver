@@ -1,0 +1,80 @@
+spring:
+  application:
+    name: edge-gateway
+  config:
+    import: "optional:vault://secret/waver/${waver.env:local}/edge-gateway"
+  cloud:
+    vault:
+      uri: ${VAULT_ADDR:http://localhost:8200}
+      token: ${VAULT_TOKEN:}
+      kv:
+        enabled: true
+        backend: secret
+    gateway:
+      server:
+        webflux:
+          filter:
+            secure-headers:
+              # Same-origin app + BFF (ADR-0009): no third-party scripts, styles or fonts (BRAND_GUIDELINES §5).
+              # form-action allows the Keycloak login/logout redirects. WAVER_CSP_DEV_CONNECT adds the dev-server websocket locally.
+              content-security-policy: >-
+                default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:;
+                font-src 'self' data:; connect-src 'self' ${WAVER_CSP_DEV_CONNECT:}; object-src 'none'; base-uri 'self';
+                frame-ancestors 'none'; form-action 'self' ${KEYCLOAK_PUBLIC_URL:http://localhost:8180}
+          default-filters:
+            - SecureHeaders
+            - RemoveRequestHeader=X-Forwarded-Prefix
+          routes:
+            # Routing by host (ADR-0009). Locally: partner.localhost -> WAVER Partner; control.localhost
+            # (and plain localhost) -> WAVER Control. *.localhost resolves to the loopback address in browsers.
+            - id: partner-bff
+              uri: ${PARTNER_BFF_URL:http://localhost:8082}
+              predicates:
+                - Host=partner.localhost:*,partner.localhost
+                - Path=/api/**,/oauth2/**,/login/**,/logout
+              filters:
+                - PreserveHostHeader
+                - name: RequestRateLimiter
+                  args:
+                    redis-rate-limiter.replenishRate: 20
+                    redis-rate-limiter.burstCapacity: 40
+                    key-resolver: "#{@sessionOrAddressKeyResolver}"
+            # The Partner SPA (frontend-partner image; Nx dev server locally).
+            - id: frontend-partner
+              uri: ${FRONTEND_PARTNER_URL:http://localhost:4300}
+              predicates:
+                - Host=partner.localhost:*,partner.localhost
+              order: 900
+            # WAVER Control. BFF API and login flow:
+            - id: control-bff
+              uri: ${CONTROL_BFF_URL:http://localhost:8081}
+              predicates:
+                - Path=/api/**,/oauth2/**,/login/**,/logout
+              filters:
+                - PreserveHostHeader
+                - name: RequestRateLimiter
+                  args:
+                    redis-rate-limiter.replenishRate: 20
+                    redis-rate-limiter.burstCapacity: 40
+                    key-resolver: "#{@sessionOrAddressKeyResolver}"
+            # Everything else is the Control SPA (frontend-control image; Nx dev server locally).
+            - id: frontend-control
+              uri: ${FRONTEND_CONTROL_URL:http://localhost:4200}
+              predicates:
+                - Path=/**
+              order: 1000
+  data:
+    redis:
+      host: ${REDIS_HOST:localhost}
+      port: 6379
+      username: edge-gateway
+      password: ${redis.password}
+
+server:
+  port: 8080
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info

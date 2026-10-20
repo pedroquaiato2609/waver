@@ -1,0 +1,63 @@
+@switch (session().status) {
+  @case ('signed-in') {
+    @if (isReseller()) {
+      <div class="shell">
+        <nav class="rail" aria-label="Navegação principal">
+          <a class="brand" routerLink="/clientes" aria-label="WAVER Partner, início">
+            <wv-symbol tone="dark" label="" />
+            <span class="product">Partner</span>
+          </a>
+          <ul>
+            @for (item of nav; track item.path) {
+              <li>
+                <a [routerLink]="item.path" routerLinkActive="active" ariaCurrentWhenActive="page">{{ item.label }}</a>
+              </li>
+            }
+          </ul>
+          <div class="who">
+            <span class="avatar" aria-hidden="true">{{ initials() }}</span>
+            <div class="identity">
+              <span class="name">{{ session().user?.name }}</span>
+              <span class="org">Revenda WAVER</span>
+            </div>
+            <button type="button" class="signout" (click)="signOut()">Sair</button>
+          </div>
+        </nav>
+        <main class="content">
+          <router-outlet />
+        </main>
+      </div>
+    } @else {
+      <section class="gate">
+        <wv-symbol tone="light" class="gate-symbol" />
+        <div class="gate-text">
+          <h1>Esta área é das revendas WAVER</h1>
+          <p>Sua conta é da equipe WAVER ou de um cliente. Use o WAVER Control ou o WAVER Workspace.</p>
+          <wv-button variant="secondary" (pressed)="signOut()">Sair e trocar de conta</wv-button>
+        </div>
+      </section>
+    }
+  }
+  @case ('signed-out') {
+    <section class="gate">
+      <wv-symbol tone="light" class="gate-symbol" />
+      <div class="gate-text">
+        <h1>WAVER Partner</h1>
+        <p>Sua carteira de clientes WAVER: cadastro, contratos e acompanhamento em um só lugar.</p>
+        <wv-button (pressed)="signIn()">Entrar</wv-button>
+        <p class="fine">O acesso exige autenticação em dois fatores. Recebeu um convite? Use o link do e-mail para criar sua senha.</p>
+      </div>
+    </section>
+  }
+  @case ('error') {
+    <section class="gate">
+      <div class="gate-text">
+        <h1>Não foi possível falar com o servidor</h1>
+        <p>O WAVER Partner não respondeu. Verifique se os serviços locais estão no ar e recarregue a página.</p>
+      </div>
+    </section>
+  }
+  @default {
+    <div class="booting" aria-busy="true"></div>
+  }
+}

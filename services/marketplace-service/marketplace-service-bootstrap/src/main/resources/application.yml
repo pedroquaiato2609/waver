@@ -1,0 +1,48 @@
+spring:
+  application:
+    name: marketplace-service
+  config:
+    import: "optional:vault://secret/waver/${waver.env:local}/marketplace-service"
+  cloud:
+    vault:
+      uri: ${VAULT_ADDR:http://localhost:8200}
+      token: ${VAULT_TOKEN:}
+      kv:
+        enabled: true
+        backend: secret
+  datasource:
+    url: jdbc:postgresql://${DB_HOST:localhost}:${DB_PORT:5433}/waver_marketplace
+    username: marketplace_app
+    password: ${db.password}
+    hikari:
+      maximum-pool-size: 10
+  flyway:
+    url: ${spring.datasource.url}   # explicit: the RLS wrapper hides the pool URL from Flyway
+    user: marketplace_owner
+    password: ${db.password}
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: ${KEYCLOAK_ISSUER:http://localhost:8180/realms/waver}
+          audiences: waver-services
+
+server:
+  port: 8097
+
+waver:
+  platform-org-id: ${WAVER_PLATFORM_ORG_ID}
+  events:
+    registry-url: ${APICURIO_URL:http://localhost:8085/apis/registry/v3}
+  services:
+    catalog-service: ${CATALOG_SERVICE_URL:http://localhost:8096}
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info
+  endpoint:
+    health:
+      probes:
+        enabled: true
